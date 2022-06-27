@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="Cnc Simulacija"
+run/main_scene="res://test/test.tscn"
 config/icon="res://icon.png"
+
+[global]
+
+wait=false
 
 [physics]
 

@@ -1,6 +1,11 @@
+#VSCode
+.vscode/
+
+# Godot
 .import/
 *.translation
 export_presets.cfg
 .mono/
+
 
 test/
