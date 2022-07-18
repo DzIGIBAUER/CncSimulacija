@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://NUMA/Masina/Masina.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scene/Kontroler/Kontroler.tscn" type="PackedScene" id=2]
+
+[sub_resource type="PanoramaSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_sky = SubResource( 1 )
+background_color = Color( 0.603922, 0.603922, 0.603922, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+auto_exposure_scale = 10.37
+adjustment_saturation = 3.1
+
+[node name="Workspace" type="Spatial"]
+
+[node name="Masina" parent="." instance=ExtResource( 1 )]
+
+[node name="Kontroler" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 0.955921, 0.293623, 0, -0.293623, 0.955921, 0.146741, 0.913556, 1.94669 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 0.112927, 0.362308, -0.925192, -0.0438969, 0.932058, 0.359639, 0.992633, 0, 0.121159, -12.1141, 4.44493, 1.61646 )
+shadow_enabled = true
+spot_range = 15.5778
+spot_angle = 11.287
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
