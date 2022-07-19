@@ -9,11 +9,11 @@ public class ControlRoot : Control {
 
     
 
-    private MainMenu MainMenuNode;
+    private MainMenu _MainMenu;
 
 
     public override void _Ready() {
-        MainMenuNode = (MainMenu)GetNode("MainMenu");
+        _MainMenu = (MainMenu)GetNode("MainMenu");
         
         
         
@@ -23,7 +23,7 @@ public class ControlRoot : Control {
     public override void _Input(InputEvent @event) {
 
         if (@event.IsActionPressed("ui_cancel")) {
-            MainMenuNode.Toggle();
+            _MainMenu.Toggle();
         }
 
         base._Input(@event);
@@ -31,16 +31,11 @@ public class ControlRoot : Control {
 
     public override void _UnhandledInput(InputEvent @event) {
 
-        if (MainMenuNode.Visible) {
+        if (_MainMenu.Visible) {
             GetTree().SetInputAsHandled();
         }
 
         base._UnhandledInput(@event);
-    }
-
-
-    public void PodesavanjaPromenjena() {
-        
     }
 
 }

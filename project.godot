@@ -16,7 +16,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Podesavanja="*res://Objekti/Podesavanja/Podesavanja.cs"
+Global="*res://Objekti/Global/Global.cs"
 
 [global]
 
