@@ -18,8 +18,6 @@ public class MainMenu : Control {
         if (Visible && @event is InputEventKey) {
             GetTree().SetInputAsHandled();
         }
-
-        GD.Print(@event);
     }
 
     /// <summary>Sakriva/Prikazuje glavni meni i kursor.</summary>
