@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scene/ControlRoot/ControlRoot.cs" type="Script" id=1]
+[ext_resource path="res://Scene/GUI/ControlRoot/ControlRoot.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Theme/Default.tres" type="Theme" id=2]
-[ext_resource path="res://Scene/Workspace/WorkspaceViewport.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scene/MainMenu/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scene/3D/Workspace/WorkspaceViewport.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scene/GUI/MainMenu/MainMenu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scene/GUI/PripremakKreator/PripremakKreator.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends ViewportContainer
@@ -21,5 +22,7 @@ script = ExtResource( 1 )
 
 [node name="ViewportContainer" parent="." instance=ExtResource( 3 )]
 script = SubResource( 1 )
+
+[node name="PripremakKreator" parent="." instance=ExtResource( 5 )]
 
 [node name="MainMenu" parent="." instance=ExtResource( 4 )]

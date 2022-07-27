@@ -11,16 +11,24 @@ config_version=4
 [application]
 
 config/name="Cnc Simulacija"
-run/main_scene="res://Scene/ControlRoot/ControlRoot.tscn"
+run/main_scene="res://Scene/GUI/ControlRoot/ControlRoot.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://Objekti/Global/Global.cs"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/CustomNodes/plugin.cfg" )
+
 [global]
 
 wait=false
+
+[gui]
+
+theme/custom="res://Assets/Theme/Default.tres"
 
 [input]
 

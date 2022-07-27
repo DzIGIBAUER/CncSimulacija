@@ -8,7 +8,7 @@ public class Tacka3D : Sprite3D {
 
     private float _BasePixelSize = 0.01f;
 
-
+    
     public override void _Process(float delta) {
         base._Process(delta);
 

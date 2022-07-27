@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://NUMA/SteznaGlava/SteznaGlava.cs" type="Script" id=1]
+
+[sub_resource type="CylinderMesh" id=1]
+
+[node name="SteznaGlava" type="MeshInstance"]
+transform = Transform( -2.65488e-09, 0.0607366, 0, -0.397714, -1.73846e-08, 0, 0, 0, 0.397714, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+script = ExtResource( 1 )
+
+[node name="GranicnaTacka" type="Position3D" parent="."]
+transform = Transform( 1, -7.10543e-15, 0, -7.10543e-15, 1, 0, 0, 0, 1, -3.99555e-08, 0.914075, 0 )

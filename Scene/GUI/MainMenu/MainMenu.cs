@@ -9,6 +9,10 @@ public class MainMenu : Control {
         // povezujemo signal za 'Razgledaj' dugme.
         Button razgledajDugme = (Button)GetNode("ContainerControl/HBoxContainer/MainMenuOptions/Razgledaj");
         razgledajDugme.Connect("pressed", this, "Toggle");
+
+        // povezujemo signal za 'Postavke' dugme.
+        Button postavkeDugme = (Button)GetNode("ContainerControl/HBoxContainer/MainMenuOptions/Postavke");
+        postavkeDugme.Connect("pressed", this, "OnPostavkeDugmePressed");
     }
 
 
@@ -29,6 +33,13 @@ public class MainMenu : Control {
             Input.SetMouseMode(Input.MouseMode.Visible);
             Show();
         }
+    }
+
+
+
+    private void OnPostavkeDugmePressed(){
+        PostavkeControl postavkeControl = (PostavkeControl)GetNode("PostavkeControl");
+        postavkeControl.Show();
     }
 
 }

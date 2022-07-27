@@ -16,3 +16,4 @@ transform = Transform( 0.999597, 0.0234923, -0.0159403, -0.0231907, 0.999553, 0.
 material_override = SubResource( 1 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
+Velicina = 0.15

@@ -1,7 +1,41 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://CustomNodes/Tacka3D/Tacka3D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/Tacke/R.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/Tacke/M.png" type="Texture" id=3]
+[ext_resource path="res://NUMA/Masina/Masina.cs" type="Script" id=4]
+[ext_resource path="res://NUMA/SteznaGlava/SteznaGlava.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PlaneMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+params_billboard_mode = 1
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+flags_no_depth_test = true
+params_billboard_mode = 1
+albedo_texture = ExtResource( 2 )
 
 [node name="Masina" type="MeshInstance"]
 mesh = SubResource( 1 )
 material/0 = null
+script = ExtResource( 4 )
+
+[node name="NultaTackaMasine" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.999597, 0.0234923, -0.0159403, -0.0231907, 0.999553, 0.0188538, 0.0163761, -0.0184765, 0.999695, -1, 0, 0 )
+material_override = SubResource( 2 )
+
+[node name="ReferentnaTackaMasine" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0.999597, 0.0234923, -0.0159403, -0.0231907, 0.999553, 0.0188538, 0.0163761, -0.0184765, 0.999695, 0.996598, 0.643357, 0 )
+material_override = SubResource( 3 )
+
+[node name="SteznaGlava" parent="." instance=ExtResource( 5 )]
+transform = Transform( -3.33996e-09, 0.0764093, 0, -0.500341, -2.18706e-08, 0, 0, 0, 0.500341, -0.798334, 0.889713, 0 )

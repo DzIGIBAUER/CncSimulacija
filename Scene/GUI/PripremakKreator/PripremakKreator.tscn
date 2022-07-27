@@ -1,0 +1,134 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://CustomNodes/Pripremak/Pripremak.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scene/GUI/PripremakKreator/PripremakKreator.cs" type="Script" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ViewportContainer
+
+# https://github.com/godotengine/godot/issues/26181#issuecomment-761903838
+func _gui_input(event):
+	$Viewport.unhandled_input(event)
+"
+
+[node name="PripremakKreator" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource( 3 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+stretch = true
+script = SubResource( 1 )
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+physics_object_picking = true
+
+[node name="Spatial" type="Spatial" parent="ViewportContainer/Viewport"]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 2.24728e-06, 0, 14.883 )
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport/Spatial"]
+transform = Transform( 0.780201, -0.215, 0.587419, 0, 0.939076, 0.343709, -0.625529, -0.268162, 0.732668, 1.82077, 1.13626, 2.27848 )
+
+[node name="Pripremak" parent="ViewportContainer/Viewport/Spatial" instance=ExtResource( 2 )]
+transform = Transform( 1.62921e-07, 0.895, 1.50996e-07, 1, -1.45814e-07, -1.65687e-20, 2.46003e-14, 1.35141e-07, -1, 0, 0, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 15.0
+margin_right = -15.0
+margin_bottom = -15.0
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 495.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+
+[node name="Kontrole" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 499.0
+margin_right = 994.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/Kontrole"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 495.0
+margin_bottom = 470.0
+size_flags_vertical = 3
+
+[node name="Izaberi" type="HBoxContainer" parent="HBoxContainer/Kontrole"]
+margin_top = 474.0
+margin_right = 495.0
+margin_bottom = 494.0
+alignment = 2
+
+[node name="Button" type="Button" parent="HBoxContainer/Kontrole/Izaberi"]
+margin_left = 439.0
+margin_right = 495.0
+margin_bottom = 20.0
+text = "Izaberi"
+
+[node name="Precnik" type="VBoxContainer" parent="HBoxContainer/Kontrole"]
+margin_top = 498.0
+margin_right = 495.0
+margin_bottom = 532.0
+
+[node name="TextContainer" type="HBoxContainer" parent="HBoxContainer/Kontrole/Precnik"]
+margin_right = 495.0
+margin_bottom = 14.0
+
+[node name="Naziv" type="Label" parent="HBoxContainer/Kontrole/Precnik/TextContainer"]
+margin_right = 120.0
+margin_bottom = 14.0
+text = "Precnik pripremka:"
+
+[node name="Vrednost" type="Label" parent="HBoxContainer/Kontrole/Precnik/TextContainer"]
+margin_left = 124.0
+margin_right = 124.0
+margin_bottom = 14.0
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/Kontrole/Precnik"]
+margin_top = 18.0
+margin_right = 495.0
+margin_bottom = 34.0
+min_value = 0.4
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Duzina" type="VBoxContainer" parent="HBoxContainer/Kontrole"]
+margin_top = 536.0
+margin_right = 495.0
+margin_bottom = 570.0
+
+[node name="TextContainer" type="HBoxContainer" parent="HBoxContainer/Kontrole/Duzina"]
+margin_right = 495.0
+margin_bottom = 14.0
+
+[node name="Naziv" type="Label" parent="HBoxContainer/Kontrole/Duzina/TextContainer"]
+margin_right = 117.0
+margin_bottom = 14.0
+text = "Duzina pripremka:"
+
+[node name="Vrednost" type="Label" parent="HBoxContainer/Kontrole/Duzina/TextContainer"]
+margin_left = 121.0
+margin_right = 121.0
+margin_bottom = 14.0
+
+[node name="HSlider" type="HSlider" parent="HBoxContainer/Kontrole/Duzina"]
+margin_top = 18.0
+margin_right = 495.0
+margin_bottom = 34.0
+min_value = 0.2
+max_value = 1.0
+step = 0.01
+value = 1.0

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scene/MainMenu/MainMenu.cs" type="Script" id=1]
-[ext_resource path="res://Scene/Controls/Controls.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scene/GUI/MainMenu/MainMenu.cs" type="Script" id=1]
+[ext_resource path="res://Scene/GUI/PostavkeControl/PostavkeControl.tscn" type="PackedScene" id=2]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -28,27 +28,28 @@ margin_bottom = 570.0
 [node name="HSeparator" type="HSeparator" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 72.0
-margin_bottom = 325.0
+margin_bottom = 310.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.5
 
 [node name="Razgledaj" type="Button" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
-margin_top = 329.0
+margin_top = 314.0
 margin_right = 72.0
-margin_bottom = 349.0
+margin_bottom = 334.0
 text = "Razgledaj"
+
+[node name="Postavke" type="Button" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
+margin_top = 338.0
+margin_right = 72.0
+margin_bottom = 358.0
+text = "Postavke"
 
 [node name="HSeparator2" type="HSeparator" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 353.0
+margin_top = 362.0
 margin_right = 72.0
 margin_bottom = 570.0
 size_flags_vertical = 3
 
-[node name="Controls" parent="ContainerControl/HBoxContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 76.0
-margin_right = 994.0
-margin_bottom = 570.0
-size_flags_horizontal = 3
+[node name="PostavkeControl" parent="." instance=ExtResource( 2 )]
+visible = false
