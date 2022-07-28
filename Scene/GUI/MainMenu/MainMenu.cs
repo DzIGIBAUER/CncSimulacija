@@ -7,11 +7,11 @@ public class MainMenu : Control {
 	
     public override void _Ready() {
         // povezujemo signal za 'Razgledaj' dugme.
-        Button razgledajDugme = (Button)GetNode("ContainerControl/HBoxContainer/MainMenuOptions/Razgledaj");
+        Button razgledajDugme = GetNode<Button>("ContainerControl/HBoxContainer/MainMenuOptions/Razgledaj");
         razgledajDugme.Connect("pressed", this, "Toggle");
 
         // povezujemo signal za 'Postavke' dugme.
-        Button postavkeDugme = (Button)GetNode("ContainerControl/HBoxContainer/MainMenuOptions/Postavke");
+        Button postavkeDugme = GetNode<Button>("ContainerControl/HBoxContainer/MainMenuOptions/Postavke");
         postavkeDugme.Connect("pressed", this, "OnPostavkeDugmePressed");
     }
 

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 
 /// <summary>
@@ -12,9 +11,9 @@ public class ControlRoot : Control {
     private PripremakKreator _kreator;
 
     public override void _Ready() {
-        _mainMenu = (MainMenu)GetNode("MainMenu");
+        _mainMenu = GetNode<MainMenu>("MainMenu");
         
-        _kreator = (PripremakKreator)GetNode("PripremakKreator");
+        _kreator = GetNode<PripremakKreator>("PripremakKreator");
         _kreator.Connect("PripremakIzabran", this, "OnPripremakIzabran", null, (uint)ConnectFlags.Oneshot);
         
         base._Ready();
@@ -40,7 +39,7 @@ public class ControlRoot : Control {
 
 
     private void OnPripremakIzabran(CSGMesh pripremak) {
-        SteznaGlava steznaGlava = (SteznaGlava)GetNode("ViewportContainer/Viewport/Workspace/Masina/SteznaGlava");
+        SteznaGlava steznaGlava = GetNode<SteznaGlava>("ViewportContainer/Viewport/Workspace/Masina/SteznaGlava");
         steznaGlava.Pripremak = pripremak;
     }
 

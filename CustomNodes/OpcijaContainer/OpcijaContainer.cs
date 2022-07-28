@@ -34,19 +34,19 @@ public class OpcijaContainer : GridContainer {
     public override void _Ready() {
         base._Ready();
 
-        GDScript script = (GDScript)GD.Load("res://CustomNodes/OpcijaContainer/signal_handler.gd");
+        GDScript script = GD.Load<GDScript>("res://CustomNodes/OpcijaContainer/signal_handler.gd");
         _signalHandler = (Node)script.New();
         AddChild(_signalHandler);
         
 
         if (_interaktivnaKontrola != null) {
-            InteraktivnaKontrola = (Control)GetNode(_interaktivnaKontrola);
+            InteraktivnaKontrola = GetNode<Control>(_interaktivnaKontrola);
         } else {
             throw new ArgumentNullException("Interaktivna Kontrola", $"Node { Name } mora da ima podešen export parametar.");
         }
         
         if (_vrednostLabel != null) {
-            VrednostLabel = (Label)GetNode(_vrednostLabel);
+            VrednostLabel = GetNode<Label>(_vrednostLabel);
         } // nema else, ovaj parametar je opcionalan.
 
         if (InteraktivnaKontrola.HasSignal(NazivSignala)) {

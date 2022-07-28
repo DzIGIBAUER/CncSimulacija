@@ -17,8 +17,8 @@ public class Masina : MeshInstance {
     /// Računa i čuva radni prostor na osnovu mašinske nulte i referentne tačke.
     /// </summary>
     private void InitWorkZone() {
-        Tacka3D nultaTackaMasine = (Tacka3D)GetNode("NultaTackaMasine");
-        Tacka3D referentnaTackaMasine = (Tacka3D)GetNode("ReferentnaTackaMasine");
+        Tacka3D nultaTackaMasine = GetNode<Tacka3D>("NultaTackaMasine");
+        Tacka3D referentnaTackaMasine = GetNode<Tacka3D>("ReferentnaTackaMasine");
 
         Vector3 workZoneStartPos = nultaTackaMasine.Translation;
         Vector3 workZoneSize = referentnaTackaMasine.Translation - workZoneStartPos;

@@ -23,7 +23,7 @@ namespace GCode
 
 
         public override string ToString() {
-            return $"Programska rečenica({Raw})";
+            return $"Programska rečenica({ Raw })";
         }
     
 

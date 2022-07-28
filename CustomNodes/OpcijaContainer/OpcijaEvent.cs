@@ -2,7 +2,7 @@ using Godot;
 
 /// <summary>
 /// Objekat koji je prosledjen kada se emituje signal.
-/// Postoji iz razloga sto može da bude prosledjen samo objekat koji inherituje Godot.Object.
+/// Postoji iz razloga što može da bude prosledjen samo objekat koji inherituje Godot.Object.
 /// </summary>
 public class OpcijaEvent : Resource {
 

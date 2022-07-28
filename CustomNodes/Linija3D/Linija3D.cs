@@ -47,7 +47,7 @@ public class Linija3D : MeshInstance {
     public override void _Ready() {
         base._Ready();
 
-        Area area = (Area)GetNode("Area");
+        Area area = GetNode<Area>("Area");
         area.Connect("mouse_entered", this, "OnAreaMouseEnter");
         area.Connect("mouse_exited", this, "OnAreaMouseExit");
         area.Connect("input_event", this, "OnAreaInputEvent");
