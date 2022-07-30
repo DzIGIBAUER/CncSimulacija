@@ -12,40 +12,20 @@ public class Kontroler : Camera {
     public float RotateFactor = 0.5f;
 
 
-    public override void _Process(float delta) {
+    /// <summary> Kretanje koji treba biti primenjena na kontroleru. </summary>
+    private Vector3 _motion = Vector3.Zero;
 
-        if (!GetTree().IsInputHandled()) {
-            ProcessMovement(delta);
-        }
-        
+
+    public override void _PhysicsProcess(float delta) {
         base._PhysicsProcess(delta);
-    }
 
-
-    private void ProcessMovement(float delta) {
-        Vector3 moveVector = Vector3.Zero;
-
-        if (Input.IsActionPressed("napred", true)) {
-            moveVector += Vector3.Forward;
-        }
-
-        if (Input.IsActionPressed("nazad", true)) {
-            moveVector += Vector3.Back;
-        }
-
-        if (Input.IsActionPressed("levo", true)) {
-            moveVector += Vector3.Left;
-        }
-
-        if (Input.IsActionPressed("desno", true)) {
-            moveVector += Vector3.Right;
-        }
-
-        TranslateObjectLocal(moveVector * MoveFactor * delta);
+        TranslateObjectLocal(_motion * MoveFactor * delta);
     }
 
 
     public override void _UnhandledInput(InputEvent @event) {
+        base._UnhandledInput(@event);
+
         if (@event is InputEventMouseMotion mouseMotionEvent) {
             // Pokret misa nam daje Vector2 cija x komponenta je horizontalna, a y vertikalna
             // Pokret po x osi je rotiranje kamere oko y ose, a pokret po y je rotiranje po x osi.
@@ -55,9 +35,34 @@ public class Kontroler : Camera {
             rotateAmount.x = Mathf.Clamp(rotateAmount.x, Mathf.Deg2Rad(-90), Mathf.Deg2Rad(90));
 
             Rotation += rotateAmount * RotateFactor;
-        }
 
-        base._UnhandledInput(@event);
+        } else if (@event is InputEventKey keyEvent) {
+
+            if (keyEvent.IsActionPressed("napred")) {
+                _motion += Vector3.Forward;
+            } else if (keyEvent.IsActionReleased("napred")) {
+                _motion -= Vector3.Forward;
+            }
+
+            if (keyEvent.IsActionPressed("nazad")) {
+                _motion += Vector3.Back;
+            } else if (keyEvent.IsActionReleased("nazad")) {
+                _motion -= Vector3.Back;
+            }
+
+            if (keyEvent.IsActionPressed("levo")) {
+                _motion += Vector3.Left;
+            } else if (keyEvent.IsActionReleased("levo")) {
+                _motion -= Vector3.Left;
+            }
+
+            if (keyEvent.IsActionPressed("desno")) {
+                _motion += Vector3.Right;
+            } else if (keyEvent.IsActionReleased("desno")) {
+                _motion -= Vector3.Right;
+            }
+
+        }
     }
 
 }
