@@ -42,7 +42,7 @@ public class OpcijaContainer : GridContainer {
         if (_interaktivnaKontrola != null) {
             InteraktivnaKontrola = GetNode<Control>(_interaktivnaKontrola);
         } else {
-            throw new ArgumentNullException("Interaktivna Kontrola", $"Node { Name } mora da ima podešen export parametar.");
+            throw new ExportParametarNullException(_interaktivnaKontrola);
         }
         
         if (_vrednostLabel != null) {

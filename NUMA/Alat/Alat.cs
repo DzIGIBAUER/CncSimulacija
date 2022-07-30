@@ -5,7 +5,7 @@ using System;
 public class Alat : Spatial {
     
     private float _brzinaHoda = 0;
-    /// <summary> Brzina kojom će se alat kretati. </summary>
+    /// <summary> Brzina kojom će se alat kretati u sekundama. </summary>
     public float BrzinaHoda {
         get => _brzinaHoda;
         set {
@@ -31,7 +31,7 @@ public class Alat : Spatial {
             return;
         }
 
-        float moveAmount = (BrzinaHoda / 100f) * delta;
+        float moveAmount = BrzinaHoda * delta;
         Vector3 newTranslation = Translation.MoveToward((Vector3)CiljnaPozicija, moveAmount);
         
         Translation = newTranslation;
@@ -42,6 +42,7 @@ public class Alat : Spatial {
     public void Pomeri(Vector3 gde, float brzina) {
         BrzinaHoda = brzina;
         CiljnaPozicija = gde;
+        GD.Print(BrzinaHoda, CiljnaPozicija);
         
     }
 

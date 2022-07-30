@@ -3,18 +3,25 @@ using Godot;
 /// <summary> Objekat Mašine. </summary>
 public class Masina : MeshInstance {
 
-    public RadniProstor RadniProstor;
+    /// <summary> Radni prostor ove mašine. </summary>
+    public RadniProstor RadniProstor{get; private set;}
+
+    /// <summary> Alat ove mašine. </summary>
+    public Alat Alat{get; private set;}
 
     public override void _Ready() {
         base._Ready();
 
-        /// <summary> Radni prpstor ove mašine. </summary>
         RadniProstor = GetNode<RadniProstor>("RadniProstor");
 
-        //Alat a = GetNode<Alat>("Alat");
-        //a.Pomeri(Vector3.Forward, 55);
-
-        
+        Alat = GetNode<Alat>("Alat");
     }
+
+
+    /// <summary> Pomera alat koristeći koordinate radnog prostora. </summary>
+    public void PomeriAlat(GCode.Point gde, float brzina) {
+        Alat.Pomeri(RadniProstor.ConvertFrom(gde), brzina);
+    }
+    
     
 }
