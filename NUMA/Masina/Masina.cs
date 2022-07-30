@@ -1,29 +1,20 @@
 using Godot;
 
+/// <summary> Objekat Mašine. </summary>
 public class Masina : MeshInstance {
-	
-    /// <summary>Radni prostor mašine.</summary>
-    public AABB WorkZone {get; private set;}
 
+    public RadniProstor RadniProstor;
 
     public override void _Ready() {
         base._Ready();
 
-        InitWorkZone();
+        /// <summary> Radni prpstor ove mašine. </summary>
+        RadniProstor = GetNode<RadniProstor>("RadniProstor");
+
+        //Alat a = GetNode<Alat>("Alat");
+        //a.Pomeri(Vector3.Forward, 55);
+
+        
     }
-
-
-    /// <summary>
-    /// Računa i čuva radni prostor na osnovu mašinske nulte i referentne tačke.
-    /// </summary>
-    private void InitWorkZone() {
-        Tacka3D nultaTackaMasine = GetNode<Tacka3D>("NultaTackaMasine");
-        Tacka3D referentnaTackaMasine = GetNode<Tacka3D>("ReferentnaTackaMasine");
-
-        Vector3 workZoneStartPos = nultaTackaMasine.Translation;
-        Vector3 workZoneSize = referentnaTackaMasine.Translation - workZoneStartPos;
-
-        WorkZone = new AABB(workZoneStartPos, workZoneSize);
-    }
-
+    
 }

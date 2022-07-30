@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://CustomNodes/Tacka3D/Tacka3D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Images/Tacke/R.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Images/Tacke/M.png" type="Texture" id=3]
 [ext_resource path="res://NUMA/Masina/Masina.cs" type="Script" id=4]
 [ext_resource path="res://NUMA/SteznaGlava/SteznaGlava.tscn" type="PackedScene" id=5]
+[ext_resource path="res://CustomNodes/Pripremak/Pripremak.tscn" type="PackedScene" id=6]
+[ext_resource path="res://NUMA/Alat/Alat.tscn" type="PackedScene" id=7]
+[ext_resource path="res://CustomNodes/RadniProstor/RadniProstor.cs" type="Script" id=8]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -29,13 +32,26 @@ mesh = SubResource( 1 )
 material/0 = null
 script = ExtResource( 4 )
 
+[node name="RadniProstor" type="Node" parent="."]
+script = ExtResource( 8 )
+_startNodePath = NodePath("../NultaTackaMasine")
+_endNodePath = NodePath("../ReferentnaTackaMasine")
+_originPath = NodePath("../NultaTackaMasine")
+
 [node name="NultaTackaMasine" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.999597, 0.0234923, -0.0159403, -0.0231907, 0.999553, 0.0188538, 0.0163761, -0.0184765, 0.999695, -1, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
 material_override = SubResource( 2 )
 
 [node name="ReferentnaTackaMasine" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.999597, 0.0234923, -0.0159403, -0.0231907, 0.999553, 0.0188538, 0.0163761, -0.0184765, 0.999695, 0.996598, 0.643357, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.996598, 0.643357, 0 )
 material_override = SubResource( 3 )
 
 [node name="SteznaGlava" parent="." instance=ExtResource( 5 )]
-transform = Transform( -3.33996e-09, 0.0764093, 0, -0.500341, -2.18706e-08, 0, 0, 0, 0.500341, -0.798334, 0.889713, 0 )
+transform = Transform( -3.44266e-09, 0.078759, 0, -0.613225, -2.68049e-08, 0, 0, 0, 0.613225, -0.855559, 0.819748, 0 )
+_pripremakPath = NodePath("Pripremak")
+
+[node name="Pripremak" parent="SteznaGlava" instance=ExtResource( 6 )]
+transform = Transform( 0.346505, -3.01368e-07, 0, -3.01368e-07, 7.241, 0, 0, 0, 0.346505, -1.19209e-07, 3.02817, 0 )
+
+[node name="Alat" parent="." instance=ExtResource( 7 )]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 1.23372, 0.838149, 0 )

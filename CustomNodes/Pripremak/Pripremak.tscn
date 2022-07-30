@@ -1,10 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="CylinderMesh" id=1]
-top_radius = 0.5
-bottom_radius = 0.5
-height = 1.5
 
 [node name="Pripremak" type="CSGMesh"]
-transform = Transform( 1.62921e-07, 1, 8.74228e-08, 1, -1.62921e-07, 0, 1.4243e-14, 8.74228e-08, -1, 0, 0, 0 )
 mesh = SubResource( 1 )

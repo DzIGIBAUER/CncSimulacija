@@ -8,13 +8,9 @@ public class ControlRoot : Control {
 
     private MainMenu _mainMenu;
 
-    private PripremakKreator _kreator;
-
     public override void _Ready() {
         _mainMenu = GetNode<MainMenu>("MainMenu");
         
-        _kreator = GetNode<PripremakKreator>("PripremakKreator");
-        _kreator.Connect("PripremakIzabran", this, "OnPripremakIzabran", null, (uint)ConnectFlags.Oneshot);
         
         base._Ready();
     }

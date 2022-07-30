@@ -2,10 +2,10 @@
 
 [ext_resource path="res://NUMA/SteznaGlava/SteznaGlava.cs" type="Script" id=1]
 
-[sub_resource type="CylinderMesh" id=1]
+[sub_resource type="PlaneMesh" id=1]
 
 [node name="SteznaGlava" type="MeshInstance"]
-transform = Transform( -2.65488e-09, 0.0607366, 0, -0.397714, -1.73846e-08, 0, 0, 0, 0.397714, 0, 0, 0 )
+transform = Transform( -2.72906e-08, 0.624336, 0, -0.624336, -2.72906e-08, 0, 0, 0, 0.624336, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 script = ExtResource( 1 )
