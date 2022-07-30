@@ -1,18 +1,9 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class RadniProstor : Node {
-
-    /// <summary> X osa radnog prostora. </summary>
-    public static Vector3.Axis X = Vector3.Axis.Y;
-
-    /// <summary> Y osa radnog prostora. </summary>
-    public static Vector3.Axis Y = Vector3.Axis.Z;
-
-    /// <summary> Z osa radnog prostora. </summary>
-    public static Vector3.Axis Z = Vector3.Axis.X;
-
 
     /// <summary> Početak radnog prostora(mašinska nulta tačka). </summary>
     [Export] private NodePath _startNodePath;
@@ -22,6 +13,17 @@ public class RadniProstor : Node {
 
     /// <summary> Node cija pozicija označava inicijalni origin radnog prostora. </summary>
     [Export] private NodePath _originPath;
+
+
+    /// <summary> Relacija koordinatnog sistema pogona i radnog prostora mašine. </summary>
+    private Dictionary<Vector3.Axis, Vector3.Axis> _relacija = new Dictionary<Vector3.Axis, Vector3.Axis>(3) {
+        [Vector3.Axis.X] = Vector3.Axis.Z,
+        [Vector3.Axis.Y] = Vector3.Axis.X,
+        [Vector3.Axis.Z] =  Vector3.Axis.Y,
+    };
+    /// <summary> Obrnuta relacija koordinatnog sistema pogona i radnog prostora mašine. </summary>
+    private Dictionary<Vector3.Axis, Vector3.Axis> _obrnutaRelacija; // namesteno u _EnterTree
+
 
     /// <summary> Origin spatial radnog prostora. </summary>
     public Spatial Origin {get; set;}
@@ -35,6 +37,8 @@ public class RadniProstor : Node {
 
     public override void _EnterTree() {
         base._EnterTree();
+
+        _obrnutaRelacija = _relacija.ToDictionary((i) => i.Value, (i) => i.Key);
 
         _masina = GetParent<Masina>();
 
@@ -68,9 +72,9 @@ public class RadniProstor : Node {
 
         // preuredjujemo koordinate.
         return new Vector3(
-            coord[(int)X],
-            coord[(int)Y],
-            coord[(int)Z]
+            coord[(int)_relacija[Vector3.Axis.X]],
+            coord[(int)_relacija[Vector3.Axis.Y]],
+            coord[(int)_relacija[Vector3.Axis.Z]]
         );
     }
 
@@ -79,11 +83,10 @@ public class RadniProstor : Node {
     public Vector3 ConvertFrom(Vector3 coord) {
 
         // redjamo koordinate nazad u prvobitni redosled.
-        //! ovo nece raditi ako se implementacija iznad promenmi.
         Vector3 poredjaneCoord = new Vector3(
-            coord[(int)Vector3.Axis.Z],
-            coord[(int)Vector3.Axis.X],
-            coord[(int)Vector3.Axis.Y]
+            coord[(int)_obrnutaRelacija[Vector3.Axis.X]],
+            coord[(int)_obrnutaRelacija[Vector3.Axis.Y]],
+            coord[(int)_obrnutaRelacija[Vector3.Axis.Z]]
         );
 
         Vector3 masinaCoord = Origin.Transform.origin + _masina.ToLocal(poredjaneCoord);
