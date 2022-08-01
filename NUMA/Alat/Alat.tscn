@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://NUMA/Alat/Alat.cs" type="Script" id=1]
 
 [sub_resource type="PrismMesh" id=1]
+
+[sub_resource type="ConvexPolygonShape" id=2]
+points = PoolVector3Array( 0, 1, 1, 1, -1, 1, 0, 1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
 [node name="Alat" type="Spatial"]
 script = ExtResource( 1 )
@@ -11,3 +14,8 @@ script = ExtResource( 1 )
 transform = Transform( 0.193217, 0, 0, 0, 0.193217, 0, 0, 0, 0.193217, 0, -0.19305, 0 )
 mesh = SubResource( 1 )
 material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
+shape = SubResource( 2 )

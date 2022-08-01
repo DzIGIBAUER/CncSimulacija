@@ -5,6 +5,8 @@ const PATH = "res://CustomNodes"
 
 var default_icon = preload("res://Assets/Images/CustomNodes/CustomControl.svg")
 
+var last_selected_node: Node
+
 var loaded_types: PoolStringArray
 
 
@@ -18,6 +20,7 @@ func _exit_tree():
 	# Clean-up of the plugin goes here.
 	# Always remember to remove it from the engine when deactivated.
 	remove_custom_types()
+
 
 
 func load_custom_types():

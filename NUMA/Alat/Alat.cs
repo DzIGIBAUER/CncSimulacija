@@ -32,17 +32,14 @@ public class Alat : Spatial {
         }
 
         float moveAmount = BrzinaHoda * delta;
-        Vector3 newTranslation = Translation.MoveToward((Vector3)CiljnaPozicija, moveAmount);
-        
-        Translation = newTranslation;
+        Translation = Translation.MoveToward((Vector3)CiljnaPozicija, moveAmount);
     }
 
 
-    /// <summary> Pomera alat određenom brzinom na novu poziciju. </summary>
+    /// <summary> Pomera alat određenom brzinom na novu poziciju u koord. sistemu mašine. </summary>
     public void Pomeri(Vector3 gde, float brzina) {
         BrzinaHoda = brzina;
         CiljnaPozicija = gde;
-        GD.Print(BrzinaHoda, CiljnaPozicija);
         
     }
 

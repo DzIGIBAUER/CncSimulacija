@@ -62,10 +62,7 @@ public class RadniProstor : Node {
             Origin = GetNode<Spatial>(_originPath);
         }
 
-        Vector3 size = end-start;
-        size.z = 0.001f;
-        GD.Print(size);
-        Aabb = new AABB(start, size);
+        Aabb = new AABB(start, end-start);
     }
 
     /// <summary> Pretvara koordinate mašine u koordinate radnog prostora mašine. </summary>
@@ -98,7 +95,7 @@ public class RadniProstor : Node {
 
     /// <summary> Da li se dati point nalazi u radnom prostoru. </summary>
     /// prebacuje ga u vector3(preuredjuje ose), uzima xform(sta god to bilo lol) kako bi koordianta bila u odnosu na origin(gde krece aabb)
-    //! Ovaj kod je vrlo opasan i moze izavati nulkearni karastih.
+    //! Ovaj kod je vrlo opasan i moze izavati nulkearni katastih.
     public bool HasPoint(GCode.Point point) => Aabb.HasPoint( Origin.Transform.Xform(ConvertFrom(point)) );
 
 }

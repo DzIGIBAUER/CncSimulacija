@@ -1,16 +1,12 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://NUMA/Masina/Masina.tscn" type="PackedScene" id=1]
 [ext_resource path="res://CustomNodes/Kontroler/Kontroler.tscn" type="PackedScene" id=2]
 
-[sub_resource type="PanoramaSky" id=1]
-
-[sub_resource type="Environment" id=2]
-background_sky = SubResource( 1 )
-background_color = Color( 0.603922, 0.603922, 0.603922, 1 )
+[sub_resource type="Environment" id=1]
+background_mode = 4
 ambient_light_color = Color( 1, 1, 1, 1 )
-auto_exposure_scale = 10.37
-adjustment_saturation = 3.1
+ambient_light_energy = 0.2
 
 [node name="Workspace" type="Spatial"]
 
@@ -19,11 +15,8 @@ adjustment_saturation = 3.1
 [node name="Kontroler" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 0.955921, 0.293623, 0, -0.293623, 0.955921, 0.146741, 0.913556, 1.94669 )
 
-[node name="SpotLight" type="SpotLight" parent="."]
-transform = Transform( 0.112927, 0.362308, -0.925192, -0.0438969, 0.932058, 0.359639, 0.992633, 0, 0.121159, -12.1141, 4.44493, 1.61646 )
-shadow_enabled = true
-spot_range = 15.5778
-spot_angle = 11.287
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource( 1 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.918564, -0.149395, 0.365953, 0, 0.925824, 0.377954, -0.395273, -0.347175, 0.850429, 1.74317, 4.45144, 6.2577 )

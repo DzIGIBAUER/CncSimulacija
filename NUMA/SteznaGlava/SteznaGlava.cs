@@ -56,7 +56,7 @@ public class SteznaGlava : MeshInstance {
 
     /// <summary> Fizički postavlji mesh pripremka u steznu glavu. </summary>
     private void PostaviPripremak(CSGMesh pripremak) {
-        GD.Print("Da stavim ", pripremak);
+        //GD.Print("Da stavim ", pripremak);
     }
 
 }
