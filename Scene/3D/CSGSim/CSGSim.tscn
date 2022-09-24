@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scene/3D/CSGSim/CSGSim.cs" type="Script" id=2]
+
+[node name="CSGSim" type="CSGCombiner"]
+layers = 2
+script = ExtResource( 2 )

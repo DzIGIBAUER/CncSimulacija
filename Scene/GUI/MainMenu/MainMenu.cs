@@ -27,10 +27,10 @@ public class MainMenu : Control {
     /// <summary>Sakriva/Prikazuje glavni meni i kursor.</summary>
     public void Toggle() {
         if (Visible) {
-            Input.SetMouseMode(Input.MouseMode.Captured);
+            Input.MouseMode = Input.MouseModeEnum.Captured;
             Hide();
         } else {
-            Input.SetMouseMode(Input.MouseMode.Visible);
+            Input.MouseMode = Input.MouseModeEnum.Visible;
             Show();
         }
     }
