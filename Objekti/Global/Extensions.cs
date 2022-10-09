@@ -24,7 +24,7 @@ static class ExtensionMethods {
     }
 
     /// <summary>
-    /// Uzimajući face-a i 2 vertexa tog face-a nazad vraća index edge-a koji dele ta 2 vertexa, ili -1 ako nije pronađen.
+    /// Uzimajući face i 2 vertexa tog face-a nazad vraća index edge-a koji dele ta 2 vertexa, ili -1 ako nije pronađen.
     /// </summary>
     /// <param name="mdt">Mesh Data Tool sa informacijama o mesh-u.</param>
     /// <param name="faceIndex">Index face-a gde se nalaze vertexi.</param>
