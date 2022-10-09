@@ -5,12 +5,22 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 
-
+/// <summary>
+/// Klasa sa metodama potrebnim za razvlačenje mesh-a.
+/// </summary>
 public static class Extrude {
 
+    /// <summary>
+    /// MeshDataTool cache za svaki mesh sa kojim smo radili, ako nam bude trebao ponovno.
+    /// </summary>
     private static ConditionalWeakTable<Mesh, MeshDataTool> _cache = new ConditionalWeakTable<Mesh, MeshDataTool>();
 
-
+    /// <summary>
+    /// Razvlači mesh.
+    /// </summary>
+    /// <param name="mesh">Mesh koji razvlačimo.</param>
+    /// <param name="to">Vektor do kog mesh treba da bude razvučen.</param>
+    /// <returns>Razvučen mesh.</returns>
     public static ArrayMesh Extruded(this Mesh mesh, Vector3 to) {
         Vector3 dir = to.Normalized();
 
@@ -46,35 +56,80 @@ public static class Extrude {
                 st.AddVertex(vertex);
             }
 
-            /*for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 3; i++) {
                 int vertexIndex = mdt.GetFaceVertex(faceIndex, i);
                 Vector3 vertex = mdt.GetVertex(vertexIndex);
 
-                st.AddVertex(vertex);
-                st.AddVertex(vertex + to);
                 int firstFaceThirdVertexIdx = FindClosestVertex(mdt, vertexIndex, toExtrude);
-                Vector3 firstFaceThirdVertex = mdt.GetVertex( firstFaceThirdVertexIdx );
 
-                firstFaceThirdVertex = (exclude.Contains(firstFaceThirdVertexIdx)) ? firstFaceThirdVertex + to : firstFaceThirdVertex;
+                /// Kreiramo prvi face
+                {
+                    Vector3 thirdVertex = mdt.GetVertex(firstFaceThirdVertexIdx);
 
-                st.AddVertex(firstFaceThirdVertex);
-                
-                int secondFaceThirdVertexIdx = FindClosestVertex(mdt, vertexIndex, toExtrude, firstFaceThirdVertexIdx);
-                Vector3 secondFaceThirdVertex = mdt.GetVertex(secondFaceThirdVertexIdx);
+                    var angle = vertex.SignedAngleTo(thirdVertex, to);
 
-                secondFaceThirdVertex = (exclude.Contains(secondFaceThirdVertexIdx)) ? secondFaceThirdVertex + to : secondFaceThirdVertex;
+                    /// Redosled vertexa mora da bude u smeru kazaljke na satu
+                    List<Vector3> verticies;
 
-                st.AddVertex(secondFaceThirdVertex);
-                st.AddVertex(vertex + to);
-                st.AddVertex(vertex);
+
+                    /// Ako smo već kreirali face sa ovim vertexom, onda ga offsetujemo sa 'to'
+                    thirdVertex = (exclude.Contains(firstFaceThirdVertexIdx)) ? thirdVertex + to : thirdVertex;
+
+
+                    /// Ako je ugao gledajući iz pravca izvlačenja manji, poređaj vertexe da budu u smeru kazaljke na satu
+                    if (angle < 0) {
+                        verticies = new List<Vector3> {vertex, thirdVertex, vertex + to};
+                    }
+                    else {
+                        verticies = new List<Vector3> {vertex, vertex + to, thirdVertex};
+                    }
+
+                    foreach (Vector3 v in verticies) st.AddVertex(v);
+
+                }
+
+
+                /// Kreiramo drugi face
+                {
+                    int thirdVertexIndex = FindClosestVertex(mdt, vertexIndex, toExtrude, firstFaceThirdVertexIdx);
+                    Vector3 thirdVertex = mdt.GetVertex(thirdVertexIndex);
+
+                    var angle = vertex.SignedAngleTo(thirdVertex, to);
+
+                    /// Redosled vertexa mora da bude u smeru kazaljke na satu
+                    List<Vector3> verticies;
+
+
+                    /// Ako smo već kreirali face sa ovim vertexom, onda ga offsetujemo sa 'to'
+                    thirdVertex = (exclude.Contains(thirdVertexIndex)) ? thirdVertex + to : thirdVertex;
+
+                    /// Ako je ugao gledajući iz pravca izvlačenja manji, poređaj vertexe da budu u smeru kazaljke na satu
+                    if (angle < 0) {
+                        verticies = new List<Vector3> {vertex, thirdVertex, vertex + to};
+                    }
+                    else {
+                        verticies = new List<Vector3> {vertex, vertex + to, thirdVertex};
+                    }
+
+                    foreach (Vector3 v in verticies) st.AddVertex(v);
+
+                }
 
                 exclude.Add(vertexIndex);
-            }*/
+            }
         }
 
         return st.Commit();
     }
 
+    /// <summary>
+    /// Pokušava da pronađe najbliži vertex u MeshDataTool objektu, u odnosu na prosleđeni.
+    /// </summary>
+    /// <param name="mdt">MeshDataTool objekat mesh-a.</param>
+    /// <param name="originVertexIndex">Vertex u odnosu na koji gledamo.</param>
+    /// <param name="toExtrude">Vertexi koji treba da budu relocirani tokom izvlačenja.</param>
+    /// <param name="exclude">Vertexi koji će biti ignorisani tokom potrage.</param>
+    /// <returns>Index vertexa u MeshDataTool, ili -1 ako vertex nije pronađen.</returns>
     private static int FindClosestVertex(MeshDataTool mdt, int originVertexIndex, HashSet<int> toExtrude, params int[] exclude) {
 
         Vector3 originVertex = mdt.GetVertex(originVertexIndex);
@@ -95,19 +150,18 @@ public static class Extrude {
                 int vertexIndex = mdt.GetFaceVertex(faceIndex, i);
                 if (vertexIndex == originVertexIndex || exclude.Contains(vertexIndex)) continue;
 
-                //int[] edges = mdt.GetVertexEdges(vertexIndex);
-
                 int edge = mdt.GetFaceEdgeBeetwen(faceIndex, originVertexIndex, vertexIndex);
                 if (edge == -1) continue;
 
-                /// Edge sme da deli najvise 1 face koji nije u toExtrude
-                //! MORA BAREM JEDNA UADHUAHIAF
+                /// Edge mora da deli najvise 1 face koji nije u toExtrude
                 int count = 0;
                 foreach (int f in mdt.GetEdgeFaces(edge)) {
                     if (!toExtrude.Contains(f)) count += 1;
 
                     if (count > 1) break;
                 }
+
+                if (count != 1) continue;
 
                 Vector3 vertex = mdt.GetVertex(vertexIndex);
                 float distance = originVertex.DistanceSquaredTo(vertex);
@@ -132,6 +186,12 @@ public static class Extrude {
     }
 
 
+    /// <summary>
+    /// Uzima MeshDataTool mesh-a i određuje koji face-ovi treba da budu relocirani tokom razvlačenja.
+    /// </summary>
+    /// <param name="mdt">MeshDataTool mesh-a koji razvlačimo.</param>
+    /// <param name="dir">Normalizovan vektor smera u kom razvlačimo.</param>
+    /// <returns>Indexi face-ova.</returns>
     //! Neki face-ovi koje ova metoda vraća izgledaju kao da su pogodni za izmenu ali ustvari nisu.
     private static HashSet<int> FacesToExtrude(MeshDataTool mdt, Vector3 dir) {
         HashSet<int> toExtrude = new HashSet<int>();
@@ -184,6 +244,11 @@ public static class Extrude {
         return toExtrude;
     }
 
+    /// <summary>
+    /// Generiše MeshDataTool od datog mesh-a.
+    /// </summary>
+    /// <param name="mesh">Mesh čiji MeshDataTool generišemo.</param>
+    /// <returns>Generisani MeshDataTool.</returns>
     private static MeshDataTool GenerateMeshData(Mesh mesh) {
         var arrMesh = mesh.asArrayMesh();
 
