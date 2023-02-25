@@ -22,32 +22,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="MainMenuOptions" type="VBoxContainer" parent="ContainerControl/HBoxContainer"]
-margin_right = 72.0
+margin_right = 82.0
 margin_bottom = 570.0
 
 [node name="HSeparator" type="HSeparator" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
 modulate = Color( 1, 1, 1, 0 )
-margin_right = 72.0
-margin_bottom = 310.0
+margin_right = 82.0
+margin_bottom = 304.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 1.5
 
 [node name="Razgledaj" type="Button" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
-margin_top = 314.0
-margin_right = 72.0
-margin_bottom = 334.0
+margin_top = 308.0
+margin_right = 82.0
+margin_bottom = 333.0
 text = "Razgledaj"
 
 [node name="Postavke" type="Button" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
-margin_top = 338.0
-margin_right = 72.0
-margin_bottom = 358.0
+margin_top = 337.0
+margin_right = 82.0
+margin_bottom = 362.0
 text = "Postavke"
 
 [node name="HSeparator2" type="HSeparator" parent="ContainerControl/HBoxContainer/MainMenuOptions"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 362.0
-margin_right = 72.0
+margin_top = 366.0
+margin_right = 82.0
 margin_bottom = 570.0
 size_flags_vertical = 3
 

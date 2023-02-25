@@ -29,7 +29,6 @@ albedo_texture = ExtResource( 2 )
 
 [node name="Masina" type="MeshInstance"]
 mesh = SubResource( 1 )
-material/0 = null
 script = ExtResource( 4 )
 
 [node name="RadniProstor" type="Node" parent="."]

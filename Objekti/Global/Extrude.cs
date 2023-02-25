@@ -16,6 +16,68 @@ public static class Extrude {
     private static ConditionalWeakTable<Mesh, MeshDataTool> _cache = new ConditionalWeakTable<Mesh, MeshDataTool>();
 
     /// <summary>
+    /// Razvlači mesh oko tačke.
+    /// </summary>
+    /// <param name="mesh">Mesh koji razvlačimo.</param>
+    /// <param name="center">Tačka oko koje razvlačimo u koordinatno sistemu mesh-a.</param>
+    /// <param name="axis">Osa oko koje razvlačimo.</param>
+    /// <returns>Razvučen mesh.</returns>
+    public static ArrayMesh ExtrudedAround(this Mesh mesh, Vector3 center, Vector3.Axis axis, int steps=1) {
+        var mdt = _cache.GetValue(mesh, GenerateMeshData);
+
+        var axisVec = Vector3.Zero;
+        axisVec[(int)axis] = 1;
+        axisVec = axisVec.Normalized();
+
+        var st = new SurfaceTool();
+        st.Begin(Mesh.PrimitiveType.Triangles);
+
+        float angleFactor = Mathf.Tau / steps;
+
+        for(int faceIndex = 0; faceIndex < mdt.GetFaceCount(); faceIndex++) {
+            for (int edgeIndex = 0; edgeIndex < 3; edgeIndex++) {
+
+                int edge = mdt.GetFaceEdge(faceIndex, edgeIndex);
+                int aIndex = mdt.GetEdgeVertex(edge, 0);
+                int bIndex = mdt.GetEdgeVertex(edge, 1);
+
+                Vector3 a = mdt.GetVertex(aIndex);
+                Vector3 b = mdt.GetVertex(bIndex);
+
+                for (int step = 1; step <= steps; step++) {
+
+                    var dir = a - center;
+
+                    var quat = new Quat(axisVec, angleFactor);
+                    dir = quat.Xform(dir);
+                    var c = dir + center;
+
+                    st.AddVertex(a);
+                    st.AddVertex(b);
+                    st.AddVertex(c);
+
+                    dir = b - center;
+
+                    dir = quat.Xform(dir);
+                    var c1 = dir + center;
+
+                    st.AddVertex(b);
+                    st.AddVertex(c1);
+                    st.AddVertex(c);
+
+                    a = c;
+                    b = c1;
+
+                }
+
+            }
+
+        }
+
+        return st.Commit();
+    }
+
+    /// <summary>
     /// Razvlači mesh.
     /// </summary>
     /// <param name="mesh">Mesh koji razvlačimo.</param>

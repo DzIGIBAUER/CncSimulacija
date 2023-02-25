@@ -6,7 +6,7 @@ using Godot;
 public class Kontroler : Camera {
 
     /// <summary>Koliko će se kamera pomeriti u jednom frame-u, pomnoženo sa delta.</summary>
-    public float MoveFactor = 0.25f;
+    public float MoveFactor = 0.5f;
 
     /// <summary>Količina pokreta miša je pretvorena u radijane i pomnožena sa ovom vrednošću.</summary>
     public float RotateFactor = 0.5f;
