@@ -50,7 +50,7 @@ public class SteznaGlava : MeshInstance {
         if (BrzinaVretena > 0) {
             // (obrtaj_po_sekundi) * pun_krug_radian * vreme_od_zadnjeg_frame-a
             float rotateAmount = (BrzinaVretena / 60f) * Mathf.Tau * delta;
-            //Rotate(MasinaProxy.Z, rotateAmount);
+            Rotate(Vector3.Right, rotateAmount);
         }
     }
 

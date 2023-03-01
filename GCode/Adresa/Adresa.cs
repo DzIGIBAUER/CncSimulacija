@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Objekti vezani za funkcionalnost G koda.
@@ -20,6 +21,7 @@ namespace GCode
             Y,
             Z,
             SPEED,
+            FEED_RATE,
         }
         
         /// <summary>Kojeg Enum TYPE je adresa.</summary>
@@ -37,6 +39,7 @@ namespace GCode
             ['X'] = TYPE.X,
             ['Y'] = TYPE.Y,
             ['Y'] = TYPE.Z,
+            ['F'] = TYPE.FEED_RATE,
         };
 
         public Adresa(char oznakaAdrese) {
@@ -46,6 +49,17 @@ namespace GCode
 
             Tip = ValidneOznakeAdresa[oznakaAdrese];
             Oznaka = oznakaAdrese;
+        }
+
+        public Adresa (TYPE tipAdrese) {
+            if (!ValidneOznakeAdresa.ContainsValue(tipAdrese)) {
+                throw new ArgumentException($"Adresa sa oznakom '{tipAdrese}' ne postoji.");
+            }
+
+            var tipKvp = ValidneOznakeAdresa.Single(kvp => kvp.Value == tipAdrese);
+
+            Tip = tipKvp.Value;
+            Oznaka = tipKvp.Key;
         }
 
     }

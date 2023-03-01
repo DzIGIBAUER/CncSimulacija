@@ -18,6 +18,10 @@ namespace GCode {
         public GCodeException (string message, ProgramskaRecenica recenica, Exception innerException) : base (message, innerException) {
             ProgramskaRecenica = recenica;
         } 
+        
+        public GCodeException (string message, ProgramskaRecenica recenica) : base (message) {
+            ProgramskaRecenica = recenica;
+        } 
     }
 
 }

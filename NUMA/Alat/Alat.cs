@@ -3,7 +3,10 @@ using System;
 
 /// <summary> Objekat Alata. </summary>
 public class Alat : Spatial {
-    
+
+    [Signal]
+    delegate void TargetReached();
+
     private float _brzinaHoda = 0;
     /// <summary> Brzina kojom će se alat kretati u sekundama. </summary>
     public float BrzinaHoda {
@@ -27,6 +30,8 @@ public class Alat : Spatial {
         if (CiljnaPozicija == null) return;
 
         if (Translation == CiljnaPozicija) {
+            EmitSignal(nameof(TargetReached));
+            GD.Print("emit");
             CiljnaPozicija = null;
             return;
         }

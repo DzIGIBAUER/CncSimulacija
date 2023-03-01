@@ -9,12 +9,25 @@ public class Masina : MeshInstance {
     /// <summary> Alat ove mašine. </summary>
     public Alat Alat{get; private set;}
 
+    /// <summary> Upravljačka jedinica ove mašine. </summary>
+    public UpravljackaJedinica UpravljackaJedinica{get; private set;}
+
+    public SteznaGlava SteznaGlava{get; private set;}
+
+    public CSGSim CSGSim{ get; private set; }
+
     public override void _Ready() {
         base._Ready();
 
         RadniProstor = GetNode<RadniProstor>("RadniProstor");
 
         Alat = GetNode<Alat>("Alat");
+
+        UpravljackaJedinica = GetNode<UpravljackaJedinica>("UpravljackaJedinica");
+
+        SteznaGlava = GetNode<SteznaGlava>("SteznaGlava");
+
+        CSGSim = GetNode<CSGSim>("CSGSim");
     }
 
 
