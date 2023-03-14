@@ -60,7 +60,7 @@ static class ExtensionMethods {
         parent.AddChild(clonedNode);
 
         foreach(Dictionary prop in node.GetPropertyList()) {
-            string propName = prop["name"] as string;
+            string propName = prop["name"].AsString();
             var propValue = node.Get(propName);
 
             clonedNode.Set(propName, propValue);

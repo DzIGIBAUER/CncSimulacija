@@ -1,29 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://ddel2wd5jveon"]
 
-[sub_resource type="CSharpScript" id=1]
-resource_name = "UpravljackaJedinica"
-script/source = "using Godot;
-using System;
-
-public class UpravljackaJedinica : Node
-{
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = \"text\";
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-        
-    }
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
-}
-"
+[ext_resource type="Script" path="res://CustomNodes/UpravljackaJedinica/UpravljackaJedinica.cs" id="1_5kpae"]
 
 [node name="UpravljackaJedinica" type="Node"]
-script = SubResource( 1 )
+script = ExtResource("1_5kpae")

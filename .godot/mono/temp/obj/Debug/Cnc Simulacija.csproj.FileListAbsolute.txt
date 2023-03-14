@@ -1,0 +1,12 @@
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.csproj.AssemblyReference.cache
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.GeneratedMSBuildEditorConfig.editorconfig
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.AssemblyInfoInputs.cache
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.AssemblyInfo.cs
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.csproj.CoreCompileInputs.cache
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\bin\Debug\Cnc Simulacija.deps.json
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\bin\Debug\Cnc Simulacija.dll
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\bin\Debug\Cnc Simulacija.pdb
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.dll
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\refint\Cnc Simulacija.dll
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\Cnc Simulacija.pdb
+E:\ProjectsGodot\CncSimulacija\.godot\mono\temp\obj\Debug\ref\Cnc Simulacija.dll

@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\ProjectsGodot\\CncSimulacija\\Cnc Simulacija.csproj": {}
+  },
+  "projects": {
+    "E:\\ProjectsGodot\\CncSimulacija\\Cnc Simulacija.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\ProjectsGodot\\CncSimulacija\\Cnc Simulacija.csproj",
+        "projectName": "Cnc Simulacija",
+        "projectPath": "E:\\ProjectsGodot\\CncSimulacija\\Cnc Simulacija.csproj",
+        "packagesPath": "C:\\Users\\Windows 10 Pro\\.nuget\\packages\\",
+        "outputPath": "E:\\ProjectsGodot\\CncSimulacija\\.godot\\mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net70"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net70",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net70",
+          "dependencies": {
+            "Godot.SourceGenerators": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "GodotSharp": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "GodotSharpEditor": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

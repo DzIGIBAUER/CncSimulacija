@@ -17,7 +17,7 @@ namespace GCode {
         }
 
         public Point(Vector3 v) {
-            X = v.x; Y = v.y; Z = v.z;
+            X = v.X; Y = v.Y; Z = v.Z;
         }
 
         /// <summary> Prebacuje ovaj Point u Vector3, zadržavajući redosled članova.</summary>

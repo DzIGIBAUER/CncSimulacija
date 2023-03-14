@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 const PATH = "res://CustomNodes"
@@ -7,7 +7,7 @@ var default_icon = preload("res://Assets/Images/CustomNodes/CustomControl.svg")
 
 var last_selected_node: Node
 
-var loaded_types: PoolStringArray
+var loaded_types: PackedStringArray
 
 
 func _enter_tree():
@@ -24,10 +24,13 @@ func _exit_tree():
 
 
 func load_custom_types():
-	var dir = Directory.new()
-	assert(dir.open(PATH) == OK, "Nije moguće otvoriti %s folder." % PATH)
+	var dir = DirAccess.open(PATH)
 	
-	dir.list_dir_begin(true, true)
+	if not dir:
+		push_error("Nije moguće otvoriti %s folder." % PATH)
+		return
+	
+	dir.list_dir_begin() # TODOGODOT4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var element_name = dir.get_next()
 	while element_name != "":
 		

@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 
 /// <summary>
@@ -16,60 +17,89 @@ public static class Extrude {
     private static ConditionalWeakTable<Mesh, MeshDataTool> _cache = new ConditionalWeakTable<Mesh, MeshDataTool>();
 
     /// <summary>
-    /// Razvlači mesh oko tačke.
+    /// 
     /// </summary>
-    /// <param name="mesh">Mesh koji razvlačimo.</param>
-    /// <param name="center">Tačka oko koje razvlačimo u koordinatno sistemu mesh-a.</param>
-    /// <param name="axis">Osa oko koje razvlačimo.</param>
-    /// <returns>Razvučen mesh.</returns>
-    public static ArrayMesh ExtrudedAround(this Mesh mesh, Vector3 center, Vector3.Axis axis, int steps=1) {
+    /// <param name="mesh"></param>
+    /// <param name="pointA"></param>
+    /// <param name="pointB"></param>
+    /// <returns></returns>
+    public static List<Vector2> PointsToExtrude(Mesh mesh, Vector3 pointA, Vector3 pointB) {
         var mdt = _cache.GetValue(mesh, GenerateMeshData);
 
-        var axisVec = Vector3.Zero;
-        axisVec[(int)axis] = 1;
-        axisVec = axisVec.Normalized();
+        Vector3 pivot;
+
+        var polyPoints = new List<Vector2>();
+        for (int vertexIndex = 0; vertexIndex < mdt.GetVertexCount(); vertexIndex++) {
+            Vector3 vertex = mdt.GetVertex(vertexIndex);
+
+            pivot = Geometry3D.GetClosestPointToSegmentUncapped(vertex, pointA, pointB);
+
+            Vector3 rotated = new Vector3(pivot.X - (vertex - pivot).X, pivot.Y, pivot.Z);
+
+            if (rotated.X > pivot.X) {
+                GD.Print($"Vece je { rotated } od { pivot }");
+                rotated.X = pivot.X;
+            } else {
+                GD.Print("Nije");
+            }
+
+            polyPoints.Add(new Vector2(rotated.X, rotated.Y));
+        }
+
+        return ConvexHull(polyPoints);
+    }
+
+    public static ArrayMesh ExtrudedAround(this Mesh mesh, Vector3 pointA, Vector3 pointB) {
+        List<Vector2> points = PointsToExtrude(mesh, pointA, pointB);
+        var mdt = _cache.GetValue(mesh, GenerateMeshData);
+
+        Vector3 pivot;
+        Vector3 dir;
+        var quat = new Quaternion(pointA.DirectionTo(pointB), Mathf.Tau / 360);
 
         var st = new SurfaceTool();
         st.Begin(Mesh.PrimitiveType.Triangles);
 
-        float angleFactor = Mathf.Tau / steps;
+        int steps = 60;
+        /*for (int i = 0; i < points.Count; i = i + steps+1) {
+            int aIndex = i;
+            int bIndex = (i < points.Count-1) ? i+1 : 0;
 
-        for(int faceIndex = 0; faceIndex < mdt.GetFaceCount(); faceIndex++) {
-            for (int edgeIndex = 0; edgeIndex < 3; edgeIndex++) {
+            float moveFactor = points[aIndex].DistanceTo(points[bIndex]);
+            for (int k = 0; k < steps; k++) {
+                points.Insert(bIndex, points[aIndex].MoveToward(points[bIndex], moveFactor));
+            }
+        }*/
 
-                int edge = mdt.GetFaceEdge(faceIndex, edgeIndex);
-                int aIndex = mdt.GetEdgeVertex(edge, 0);
-                int bIndex = mdt.GetEdgeVertex(edge, 1);
+        GD.Print(points.Count);
 
-                Vector3 a = mdt.GetVertex(aIndex);
-                Vector3 b = mdt.GetVertex(bIndex);
+        for (int i = 0; i < points.Count; i++) {
+            int aIndex = i;
+            int bIndex = (i < points.Count-1) ? i+1 : 0;
+            
+            Vector3 a = new Vector3(points[aIndex].X, points[aIndex].Y, 0);
+            Vector3 b = new Vector3(points[bIndex].X, points[bIndex].Y, 0);
 
-                for (int step = 1; step <= steps; step++) {
+            //st.AddVertex(a);
+            //st.AddVertex(b);
+   
+            for (int step = 0; step < 360; step++) {
+                pivot = Geometry3D.GetClosestPointToSegmentUncapped(a, pointA, pointB);
+                dir = a - pivot;
+                dir = quat * dir;
 
-                    var dir = a - center;
+                var ca = dir + pivot;
+                
+                pivot = Geometry3D.GetClosestPointToSegmentUncapped(b, pointA, pointB);
+                dir = b - pivot;
+                dir = quat * dir;
 
-                    var quat = new Quat(axisVec, angleFactor);
-                    dir = quat.Xform(dir);
-                    var c = dir + center;
+                var cb = dir + pivot;
 
-                    st.AddVertex(a);
-                    st.AddVertex(b);
-                    st.AddVertex(c);
-
-                    dir = b - center;
-
-                    dir = quat.Xform(dir);
-                    var c1 = dir + center;
-
-                    st.AddVertex(b);
-                    st.AddVertex(c1);
-                    st.AddVertex(c);
-
-                    a = c;
-                    b = c1;
-
-                }
-
+                st.AddTriangleFan(new []{a, ca, b});
+                st.AddTriangleFan(new []{b, ca, cb});
+                a = ca;
+                b = cb;
             }
 
         }
@@ -272,7 +302,7 @@ public static class Extrude {
                 if (i == faceIndex) continue; // preskačemo trenutni face
 
                 /// Da li ray iz centra face-a u smeru izduživanja udara u face koji sada proveravamo
-                var result = Geometry.RayIntersectsTriangle(
+                var result = Geometry3D.RayIntersectsTriangle(
                     center,
                     dir,
                     mdt.GetVertex( mdt.GetFaceVertex(i, 0) ),
@@ -281,16 +311,16 @@ public static class Extrude {
                 );
 
                 /// Ako ray udara u face
-                if (result is Vector3 hitPoint) {
+                if (result.Obj is Vector3 hitPoint) {
 
                     /// Proveravamo da li je ray udario u samu ivicu face-a
                     // Tako sto upoređujemo razliku mesta presecanja ray-a i rastojanja tog mesta i najbliže 
                     // tačke na ivici face-a (3 puta, za svaku ivicu) sa Vector3.Zero.
                     // Ako ne udara u ivicu onda udara negde "dublje" u face, pa neće proći dalje.
                     if(!(
-                        hitPoint - Geometry.GetClosestPointToSegment(hitPoint, a, b) == Vector3.Zero ||
-                        hitPoint - Geometry.GetClosestPointToSegment(hitPoint, b, c) == Vector3.Zero ||
-                        hitPoint - Geometry.GetClosestPointToSegment(hitPoint, c, a) == Vector3.Zero
+                        hitPoint - Geometry3D.GetClosestPointToSegment(hitPoint, a, b) == Vector3.Zero ||
+                        hitPoint - Geometry3D.GetClosestPointToSegment(hitPoint, b, c) == Vector3.Zero ||
+                        hitPoint - Geometry3D.GetClosestPointToSegment(hitPoint, c, a) == Vector3.Zero
                     )) {
                         break;
                     }
@@ -305,6 +335,54 @@ public static class Extrude {
 
         return toExtrude;
     }
+
+    public static List<Vector2> ConvexHull(List<Vector2> points)
+        {
+            if (points.Count < 3)
+            {
+                throw new ArgumentException("At least 3 points reqired", "points");
+            }
+
+            List<Vector2> hull = new List<Vector2>();
+
+            // get leftmost point
+            Vector2 vPointOnHull = points.Where(p => p.X == points.Min(min => min.X)).First();
+
+            Vector2 vEndpoint;
+            do
+            {
+                hull.Add(vPointOnHull);
+                vEndpoint = points[0];
+
+                for (int i = 1; i < points.Count; i++)
+                {
+                    if ((vPointOnHull == vEndpoint)
+                        || (Orientation(vPointOnHull, vEndpoint, points[i]) == -1))
+                    {
+                        vEndpoint = points[i];
+                    }
+                }
+
+                vPointOnHull = vEndpoint;
+
+            }
+            while (vEndpoint != hull[0]);
+
+            return hull;
+        }
+
+        private static int Orientation(Vector2 p1, Vector2 p2, Vector2 p)
+        {
+            // Determinant
+            float Orin = (p2.X - p1.X) * (p.Y - p1.Y) - (p.X - p1.X) * (p2.Y - p1.Y);
+
+            if (Orin > 0)
+                return -1; //          (* Orientation is to the left-hand side  *)
+            if (Orin < 0)
+                return 1; // (* Orientation is to the right-hand side *)
+
+            return 0; //  (* Orientation is neutral aka collinear  *)
+        }
 
     /// <summary>
     /// Generiše MeshDataTool od datog mesh-a.

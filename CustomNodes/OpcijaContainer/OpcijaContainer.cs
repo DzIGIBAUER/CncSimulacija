@@ -3,11 +3,11 @@ using System;
 
 
 /// <summary> Container Node za opciju koji emituje signale kada je opcija izmenjena. Exporti moraju da budu namešteni. </summary>
-public class OpcijaContainer : GridContainer {
+public partial class OpcijaContainer : GridContainer {
 
     /// <summary> Signal koji je emitovan kada je vrednost opcije promenjena. </summary>
     [Signal]
-    delegate void OpcijaPromenjena(OpcijaEvent vrednost);
+    public delegate void OpcijaPromenjenaEventHandler(OpcijaEvent vrednost);
 
     [Export]
     private NodePath _interaktivnaKontrola;
@@ -50,7 +50,7 @@ public class OpcijaContainer : GridContainer {
         } // nema else, ovaj parametar je opcionalan.
 
         if (InteraktivnaKontrola.HasSignal(NazivSignala)) {
-            InteraktivnaKontrola.Connect(NazivSignala, _signalHandler, "on_interaktivna_kontrola_value_change");
+            InteraktivnaKontrola.Connect(NazivSignala,new Callable(_signalHandler,"on_interaktivna_kontrola_value_change"));
         
         } else {
             throw new ArgumentException($"Signal { NazivSignala } nije pronađen kao definisan signal node-a { Name }.", "Naziv Signala");

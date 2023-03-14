@@ -3,7 +3,7 @@ using Godot;
 /// <sumamry>
 /// Kontroler koji nam omogućava free look kako bi se kretali u prostoru.
 ///</summary>
-public class Kontroler : Camera {
+public partial class Kontroler : Camera3D {
 
     /// <summary>Koliko će se kamera pomeriti u jednom frame-u, pomnoženo sa delta.</summary>
     public float MoveFactor = 0.5f;
@@ -16,10 +16,10 @@ public class Kontroler : Camera {
     private Vector3 _motion = Vector3.Zero;
 
 
-    public override void _PhysicsProcess(float delta) {
+    public override void _PhysicsProcess(double delta) {
         base._PhysicsProcess(delta);
 
-        TranslateObjectLocal(_motion * MoveFactor * delta);
+        TranslateObjectLocal(_motion * MoveFactor * (float)delta);
     }
 
 
@@ -31,8 +31,8 @@ public class Kontroler : Camera {
             // Pokret po x osi je rotiranje kamere oko y ose, a pokret po y je rotiranje po x osi.
             // Kamera se ne rotira po z osi, nema potrebe da radi barell roll.
 
-            Vector3 rotateAmount = new Vector3(-Mathf.Deg2Rad(mouseMotionEvent.Relative.y), -Mathf.Deg2Rad(mouseMotionEvent.Relative.x), 0);
-            rotateAmount.x = Mathf.Clamp(rotateAmount.x, Mathf.Deg2Rad(-90), Mathf.Deg2Rad(90));
+            Vector3 rotateAmount = new Vector3(-Mathf.DegToRad(mouseMotionEvent.Relative.Y), -Mathf.DegToRad(mouseMotionEvent.Relative.X), 0);
+            rotateAmount.X = Mathf.Clamp(rotateAmount.X, Mathf.DegToRad(-90), Mathf.DegToRad(90));
 
             Rotation += rotateAmount * RotateFactor;
 

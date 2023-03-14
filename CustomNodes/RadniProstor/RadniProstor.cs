@@ -3,16 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class RadniProstor : Node {
+public partial class RadniProstor : Node {
 
     /// <summary> Početak radnog prostora(mašinska nulta tačka). </summary>
-    [Export] private NodePath _startNodePath;
+    [Export] private Node3D _startNode;
     
     /// <summary> Kraj radnog prostora(referentna tačka). </summary>
-    [Export] private NodePath _endNodePath;
+    [Export] private Node3D _endNode;
 
     /// <summary> Node čija pozicija označava inicijalni origin radnog prostora. </summary>
-    [Export] private NodePath _originPath;
+    [Export] public Node3D Origin { get; set; }
 
 
     /// <summary> Relacija radnog prostora mašine i koordinatnog sistema pogona. </summary>
@@ -25,11 +25,8 @@ public class RadniProstor : Node {
     private Dictionary<Vector3.Axis, Vector3.Axis> _obrnutaRelacija; // namesteno u _EnterTree
 
 
-    /// <summary> Origin spatial radnog prostora. </summary>
-    public Spatial Origin {get; set;}
-
     /// <summary> Axis-alinged bounding box ovog radnog prostora. </summary>
-    public AABB Aabb {get; set;}
+    public Aabb Aabb {get; set;}
 
 
     private Masina _masina;
@@ -42,33 +39,13 @@ public class RadniProstor : Node {
 
         _masina = GetParent<Masina>();
 
-        Vector3 start, end;
-
-        if (_startNodePath.IsEmpty()) {
-            throw new ExportParametarNullException(_startNodePath);
-        } else {
-            start = GetNode<Spatial>(_startNodePath).Translation;
-        }
-
-        if (_endNodePath.IsEmpty()) {
-            throw new ExportParametarNullException(_endNodePath);
-        } else {
-            end = GetNode<Spatial>(_endNodePath).Translation;
-        }
-
-        if (_originPath.IsEmpty()) {
-            throw new ExportParametarNullException(_originPath);
-        } else {
-            Origin = GetNode<Spatial>(_originPath);
-        }
-
-        Aabb = new AABB(start, end-start);
+        Aabb = new Aabb(_startNode.Position, _endNode.Position-_startNode.Position);
     }
 
     /// <summary> Pretvara koordinate mašine u koordinate radnog prostora mašine. </summary>
     public GCode.Point ConvertTo(Vector3 masinaCoord) {
         // koliko je coord udaljen od origin
-        Vector3 coord = _masina.ToGlobal(masinaCoord) - Origin.Transform.origin;
+        Vector3 coord = _masina.ToGlobal(masinaCoord) - Origin.Transform.Origin;
 
         // preuredjujemo koordinate.
         return new GCode.Point(
@@ -89,13 +66,8 @@ public class RadniProstor : Node {
             coord[(int)_obrnutaRelacija[Vector3.Axis.Z]]
         );
 
-        Vector3 masinaCoord = Origin.Transform.origin + _masina.ToLocal(poredjaneCoord);
+        Vector3 masinaCoord = Origin.Transform.Origin + _masina.ToLocal(poredjaneCoord);
         return masinaCoord;
     }
-
-    /// <summary> Da li se dati point nalazi u radnom prostoru. </summary>
-    /// prebacuje ga u vector3(preuredjuje ose), uzima xform(sta god to bilo lol) kako bi koordianta bila u odnosu na origin(gde krece aabb)
-    //! Ovaj kod je vrlo opasan i moze izavati nulkearni katastih.
-    public bool HasPoint(GCode.Point point) => Aabb.HasPoint( Origin.Transform.Xform(ConvertFrom(point)) );
 
 }

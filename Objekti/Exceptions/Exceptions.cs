@@ -3,7 +3,7 @@ using System;
 
 
 /// <summary> Exception koji je bačen kada exportovan parametar node-a nije podešen. </summary>
-public class ExportParametarNullException : Exception {
+public partial class ExportParametarNullException : Exception {
 
     /// <summary> Objekat čiji parametar nije podešen. </summary>
     public object OdgovoranObjekat;

@@ -2,5 +2,5 @@
 
 [ext_resource path="res://CustomNodes/Kontroler/Kontroler.cs" type="Script" id=1]
 
-[node name="Kontroler" type="Camera"]
+[node name="Kontroler" type="Camera3D"]
 script = ExtResource( 1 )

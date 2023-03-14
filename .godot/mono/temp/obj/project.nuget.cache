@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "E2MSEMVcoiFl7ubGE1mu3TJqhGvXHkI87AGeYu2bJC44PaOL0QNAXo2alaefGRVcmGU0+MfogjF89SdIAQ0+VA==",
+  "success": true,
+  "projectFilePath": "E:\\ProjectsGodot\\CncSimulacija\\Cnc Simulacija.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godot.sourcegenerators\\4.0.0\\godot.sourcegenerators.4.0.0.nupkg.sha512",
+    "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godotsharp\\4.0.0\\godotsharp.4.0.0.nupkg.sha512",
+    "C:\\Users\\Windows 10 Pro\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder\\godotsharpeditor\\4.0.0\\godotsharpeditor.4.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

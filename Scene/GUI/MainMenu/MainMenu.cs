@@ -3,16 +3,16 @@ using Godot;
 /// <summary>
 /// Glavni meni prikazan prilikom ulaska u program.
 ///</summary>
-public class MainMenu : Control {
+public partial class MainMenu : Control {
 	
     public override void _Ready() {
         // povezujemo signal za 'Razgledaj' dugme.
         Button razgledajDugme = GetNode<Button>("ContainerControl/HBoxContainer/MainMenuOptions/Razgledaj");
-        razgledajDugme.Connect("pressed", this, "Toggle");
+        razgledajDugme.Connect("pressed",new Callable(this,"Toggle"));
 
         // povezujemo signal za 'Postavke' dugme.
         Button postavkeDugme = GetNode<Button>("ContainerControl/HBoxContainer/MainMenuOptions/Postavke");
-        postavkeDugme.Connect("pressed", this, "OnPostavkeDugmePressed");
+        postavkeDugme.Connect("pressed",new Callable(this,"OnPostavkeDugmePressed"));
     }
 
 
@@ -20,7 +20,7 @@ public class MainMenu : Control {
         base._Input(@event);
 
         if (Visible && @event is InputEventKey) {
-            GetTree().SetInputAsHandled();
+            GetViewport().SetInputAsHandled();
         }
     }
 

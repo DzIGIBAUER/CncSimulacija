@@ -11,7 +11,7 @@ namespace GCode
     /// <summary>
     /// Objekat koji opisuje tip adrese.
     ///</summary>
-    public class Adresa : Reference {
+    public partial class Adresa : RefCounted {
 
         public enum TYPE {
             BLOCK,
@@ -38,7 +38,7 @@ namespace GCode
             ['S'] = TYPE.SPEED,
             ['X'] = TYPE.X,
             ['Y'] = TYPE.Y,
-            ['Y'] = TYPE.Z,
+            ['Z'] = TYPE.Z,
             ['F'] = TYPE.FEED_RATE,
         };
 

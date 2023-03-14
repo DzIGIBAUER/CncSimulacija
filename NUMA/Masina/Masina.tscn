@@ -1,63 +1,74 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=3 uid="uid://d37c47mqqlb12"]
 
-[ext_resource path="res://CustomNodes/Tacka3D/Tacka3D.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Images/Tacke/R.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Images/Tacke/M.png" type="Texture" id=3]
-[ext_resource path="res://NUMA/Masina/Masina.cs" type="Script" id=4]
-[ext_resource path="res://NUMA/SteznaGlava/SteznaGlava.tscn" type="PackedScene" id=5]
-[ext_resource path="res://CustomNodes/Pripremak/Pripremak.tscn" type="PackedScene" id=6]
-[ext_resource path="res://NUMA/Alat/Alat.tscn" type="PackedScene" id=7]
-[ext_resource path="res://CustomNodes/RadniProstor/RadniProstor.cs" type="Script" id=8]
-[ext_resource path="res://CustomNodes/UpravljackaJedinica/UpravljackaJedinica.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scene/3D/CSGSim/CSGSim.tscn" type="PackedScene" id=10]
+[ext_resource type="PackedScene" path="res://CustomNodes/Tacka3D/Tacka3D.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://d0nurwged80ed" path="res://Assets/Images/Tacke/R.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://chrawj0f7va4a" path="res://Assets/Images/Tacke/M.png" id="3"]
+[ext_resource type="Script" path="res://NUMA/Masina/Masina.cs" id="4"]
+[ext_resource type="PackedScene" path="res://NUMA/SteznaGlava/SteznaGlava.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://04bm3i4bllqg" path="res://CustomNodes/Pripremak/Pripremak.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://cfwl4d0b27w8a" path="res://NUMA/Alat/Alat.tscn" id="7"]
+[ext_resource type="Script" path="res://CustomNodes/RadniProstor/RadniProstor.cs" id="8"]
+[ext_resource type="PackedScene" uid="uid://ddel2wd5jveon" path="res://CustomNodes/UpravljackaJedinica/UpravljackaJedinica.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://Scene/3D/CSGSim/CSGSim.tscn" id="10"]
+[ext_resource type="ArrayMesh" uid="uid://dsglgeygdwp5s" path="res://alobre.tres" id="11_6xjbs"]
 
-[sub_resource type="PlaneMesh" id=1]
+[sub_resource type="PlaneMesh" id="1"]
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4l8s"]
 resource_local_to_scene = true
-flags_transparent = true
-flags_unshaded = true
-flags_no_depth_test = true
-params_billboard_mode = 1
-albedo_texture = ExtResource( 3 )
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("3")
+billboard_mode = 1
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_di6md"]
 resource_local_to_scene = true
-flags_transparent = true
-flags_unshaded = true
-flags_no_depth_test = true
-params_billboard_mode = 1
-albedo_texture = ExtResource( 2 )
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = ExtResource("2")
+billboard_mode = 1
 
-[node name="Masina" type="MeshInstance"]
-mesh = SubResource( 1 )
-script = ExtResource( 4 )
+[node name="Masina" type="MeshInstance3D"]
+mesh = SubResource("1")
+script = ExtResource("4")
 
-[node name="RadniProstor" type="Node" parent="."]
-script = ExtResource( 8 )
-_startNodePath = NodePath("../NultaTackaMasine")
-_endNodePath = NodePath("../ReferentnaTackaMasine")
-_originPath = NodePath("../NultaTackaMasine")
+[node name="RadniProstor" type="Node" parent="." node_paths=PackedStringArray("_startNode", "_endNode", "Origin")]
+script = ExtResource("8")
+_startNode = NodePath("../NultaTackaMasine")
+_endNode = NodePath("../ReferentnaTackaMasine")
+Origin = NodePath("../NultaTackaMasine")
 
-[node name="NultaTackaMasine" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
-material_override = SubResource( 2 )
+[node name="NultaTackaMasine" parent="." instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+material_override = SubResource("StandardMaterial3D_y4l8s")
 
-[node name="ReferentnaTackaMasine" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.996598, 0.643357, 0 )
-material_override = SubResource( 3 )
+[node name="ReferentnaTackaMasine" parent="." instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.996598, 0.643357, 0)
+material_override = SubResource("StandardMaterial3D_di6md")
 
-[node name="SteznaGlava" parent="." instance=ExtResource( 5 )]
-transform = Transform( -3.44266e-09, 0.078759, 0, -0.613225, -2.68049e-08, 0, 0, 0, 0.613225, -0.855559, 0.819748, 0 )
-_pripremakPath = NodePath("Pripremak")
+[node name="SteznaGlava" parent="." node_paths=PackedStringArray("Pripremak") instance=ExtResource("5")]
+transform = Transform3D(-2.68049e-08, 0.078759, 0, -0.613225, -3.44267e-09, 0, 0, 0, 0.613225, -0.855559, 0.819748, 0)
+Pripremak = NodePath("Pripremak")
 
-[node name="Pripremak" parent="SteznaGlava" instance=ExtResource( 6 )]
-transform = Transform( 0.346505, -3.01368e-07, 0, -3.01368e-07, 7.241, 0, 0, 0, 0.346505, -1.19209e-07, 3.02817, 0 )
+[node name="Pripremak" parent="SteznaGlava" instance=ExtResource("6")]
+transform = Transform3D(0.346505, -3.01368e-07, 0, -3.01368e-07, 7.241, 0, 0, 0, 0.346505, -1.19209e-07, 3.02817, 0)
 
-[node name="Alat" parent="." instance=ExtResource( 7 )]
-transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.118308, 0.838149, 0 )
+[node name="Alat" parent="." instance=ExtResource("7")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.118308, 0.838149, 0)
 
-[node name="UpravljackaJedinica" parent="." instance=ExtResource( 9 )]
+[node name="UpravljackaJedinica" parent="." instance=ExtResource("9")]
 
-[node name="CSGSim" parent="." instance=ExtResource( 10 )]
+[node name="CSGSim" parent="." instance=ExtResource("10")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="Pripremak" parent="CSGSim" instance=ExtResource("6")]
+transform = Transform3D(-2.68392e-08, 0.61401, 0, -0.61401, -2.68392e-08, 0, 0, 0, 0.61401, -1.0131, 4.42841e-08, 0)
 visible = false
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGSim"]
+transform = Transform3D(-1.91568e-08, -0.438258, 3.83137e-08, -0.438258, 1.91568e-08, -1.67474e-15, -1.18418e-22, -3.83137e-08, -0.438258, 1.50053, -0.00642341, -0.0016266)
+visible = false
+operation = 2
+mesh = ExtResource("11_6xjbs")

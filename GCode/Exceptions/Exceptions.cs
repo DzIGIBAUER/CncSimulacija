@@ -4,7 +4,7 @@ using System;
 namespace GCode {
 
     /// <summary> Exception koji je bačen kada dođe do greške sa programskom rečenicom G koda. </summary>
-    public class GCodeException : Exception {
+    public partial class GCodeException : Exception {
 
         /// <summary> Programska rečenica koja je zaslužna za ovu grešku. </summary>
         public object ProgramskaRecenica;

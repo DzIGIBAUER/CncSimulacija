@@ -12,7 +12,7 @@ namespace GCode
     /// <summary>
     /// Objekat koji opisuje programsku rečenicu.
     ///</summary>
-    public class ProgramskaRecenica : Reference {
+    public partial class ProgramskaRecenica : RefCounted {
         /// <summary>Recenica u izvornom obliku.</summary>
         public string Raw { get; }
 
@@ -87,7 +87,7 @@ namespace GCode
 
     }
 
-    public class ParamValue {
+    public partial class ParamValue {
 
         public string Text { get; private set; }
         public int Number { get; private set; }
@@ -109,7 +109,7 @@ namespace GCode
     }
 
     public struct RecenicaData {
-        public ArrayMesh ExtrudedMesh { get; set; }
         public ArrayMesh ResultPart { get; set; }
+        public Transform3D ResultPartGlobalTransform { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 
 [ext_resource path="res://Scene/3D/CSGSim/CSGSim.cs" type="Script" id=2]
 
-[node name="CSGSim" type="CSGCombiner"]
+[node name="CSGSim" type="CSGCombiner3D"]
 layers = 2
 script = ExtResource( 2 )
