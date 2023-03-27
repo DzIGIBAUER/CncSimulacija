@@ -6,6 +6,6 @@
 *.translation
 export_presets.cfg
 .mono/
-
+.godot/
 
 test/

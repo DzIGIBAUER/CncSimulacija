@@ -24,8 +24,8 @@ public partial class CSGSim : CsgCombiner3D {
         GD.Print(ResourceSaver.Save(alatDup.Mesh, "E:\\ProjectsGodot\\CncSimulacija\\alobre.tres"));
         GD.Print(ResourceSaver.Save(pripremakDup.Mesh, "E:\\ProjectsGodot\\CncSimulacija\\pripbre.tres"));
 
-        alatDup.Mesh = GD.Load<Mesh>("E:\\ProjectsGodot\\CncSimulacija\\alobre.tres");
-        pripremakDup.Mesh = GD.Load<Mesh>("E:\\ProjectsGodot\\CncSimulacija\\pripbre.tres");
+        //alatDup.Mesh = GD.Load<Mesh>("E:\\ProjectsGodot\\CncSimulacija\\alobre.tres");
+        //pripremakDup.Mesh = GD.Load<Mesh>("E:\\ProjectsGodot\\CncSimulacija\\pripbre.tres");
 
         AddChild(pripremakDup);
         pripremakDup.AddChild(alatDup);

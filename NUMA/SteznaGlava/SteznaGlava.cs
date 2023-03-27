@@ -4,12 +4,12 @@ using System;
 /// <summary> Objekat stezne glave. </summary>
 public partial class SteznaGlava : MeshInstance3D {
 
-	private CsgMesh3D _pripremak;
+	private Pripremak _pripremak;
 	/// <summary> Pripremak koji se nalazi u steznoj glavi. </summary>
-	[Export] public CsgMesh3D Pripremak {
+	[Export] public Pripremak Pripremak {
 		get => _pripremak;
 		set {
-			if (value is CsgMesh3D) {
+			if (value is Pripremak) {
 				PostaviPripremak(value);
 				_pripremak = value;
 			} else {
@@ -43,7 +43,7 @@ public partial class SteznaGlava : MeshInstance3D {
 	}
 
 	/// <summary> Fizički postavlji mesh pripremka u steznu glavu. </summary>
-	private void PostaviPripremak(CsgMesh3D pripremak) {
+	private void PostaviPripremak(Pripremak pripremak) {
 		//GD.Print("Da stavim ", pripremak);
 	}
 

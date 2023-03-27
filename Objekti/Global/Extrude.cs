@@ -16,6 +16,77 @@ public static class Extrude {
     /// </summary>
     private static ConditionalWeakTable<Mesh, MeshDataTool> _cache = new ConditionalWeakTable<Mesh, MeshDataTool>();
 
+    public static Vector2[] ToConvexHull2D(this Mesh mesh, Node3D node, Vector3 pointA, Vector3 pointB) {
+        var mdt = _cache.GetValue(mesh, GenerateMeshData);
+
+        Vector3 pivot;
+
+        var polyPoints = new List<Vector2>();
+        for (int vertexIndex = 0; vertexIndex < mdt.GetVertexCount(); vertexIndex++) {
+            Vector3 vertex = mdt.GetVertex(vertexIndex);
+
+            pivot = Geometry3D.GetClosestPointToSegmentUncapped(vertex, pointA, pointB);
+
+            Vector3 rotated = new Vector3(pivot.X, pivot.Y, pivot.Z) - (pivot - vertex);
+
+            rotated = node.ToGlobal(rotated);
+
+            if (rotated.X > pivot.X) {
+                rotated.X = pivot.X;
+            }
+
+            polyPoints.Add(new Vector2(rotated.X, rotated.Y));
+        }
+
+        return Geometry2D.ConvexHull(polyPoints.ToArray());
+    }
+
+    public static ArrayMesh ExtrudeAroundConvexHull(this Vector2[] points, Node3D node, Vector3 pointA, Vector3 pointB) {
+        Vector3 pivot;
+        Vector3 dir;
+        
+        var quat = new Quaternion(pointA.DirectionTo(pointB), Mathf.Tau / 360);
+        
+        var st = new SurfaceTool();
+        st.Begin(Mesh.PrimitiveType.Triangles);
+
+        for (int i = 0; i < points.Length; i++) {
+            int aIndex = i;
+            int bIndex = (i < points.Length-1) ? i+1 : 0;
+            
+            Vector3 a = new Vector3(points[aIndex].X, points[aIndex].Y, 0);
+            Vector3 b = new Vector3(points[bIndex].X, points[bIndex].Y, 0);
+
+            a = node.ToLocal(a);
+            b = node.ToLocal(b);
+
+            //st.AddVertex(a);
+            //st.AddVertex(b);
+
+            for (int step = 0; step < 360; step++) {
+                pivot = Geometry3D.GetClosestPointToSegmentUncapped(a, pointA, pointB);
+                dir = a - pivot;
+                dir = quat * dir;
+
+                var ca = dir + pivot;
+                
+                pivot = Geometry3D.GetClosestPointToSegmentUncapped(b, pointA, pointB);
+                dir = b - pivot;
+                dir = quat * dir;
+
+                var cb = dir + pivot;
+
+                st.AddTriangleFan(new []{a, b, ca});
+                st.AddTriangleFan(new []{b, cb, ca});
+                a = ca;
+                b = cb;
+            }
+
+        }
+
+        return st.Commit();
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -46,7 +117,7 @@ public static class Extrude {
             polyPoints.Add(new Vector2(rotated.X, rotated.Y));
         }
 
-        return ConvexHull(polyPoints);
+        return Geometry2D.ConvexHull(polyPoints.ToArray()).ToList();
     }
 
     public static ArrayMesh ExtrudedAround(this Mesh mesh, Vector3 pointA, Vector3 pointB) {
@@ -335,54 +406,6 @@ public static class Extrude {
 
         return toExtrude;
     }
-
-    public static List<Vector2> ConvexHull(List<Vector2> points)
-        {
-            if (points.Count < 3)
-            {
-                throw new ArgumentException("At least 3 points reqired", "points");
-            }
-
-            List<Vector2> hull = new List<Vector2>();
-
-            // get leftmost point
-            Vector2 vPointOnHull = points.Where(p => p.X == points.Min(min => min.X)).First();
-
-            Vector2 vEndpoint;
-            do
-            {
-                hull.Add(vPointOnHull);
-                vEndpoint = points[0];
-
-                for (int i = 1; i < points.Count; i++)
-                {
-                    if ((vPointOnHull == vEndpoint)
-                        || (Orientation(vPointOnHull, vEndpoint, points[i]) == -1))
-                    {
-                        vEndpoint = points[i];
-                    }
-                }
-
-                vPointOnHull = vEndpoint;
-
-            }
-            while (vEndpoint != hull[0]);
-
-            return hull;
-        }
-
-        private static int Orientation(Vector2 p1, Vector2 p2, Vector2 p)
-        {
-            // Determinant
-            float Orin = (p2.X - p1.X) * (p.Y - p1.Y) - (p.X - p1.X) * (p2.Y - p1.Y);
-
-            if (Orin > 0)
-                return -1; //          (* Orientation is to the left-hand side  *)
-            if (Orin < 0)
-                return 1; // (* Orientation is to the right-hand side *)
-
-            return 0; //  (* Orientation is neutral aka collinear  *)
-        }
 
     /// <summary>
     /// Generiše MeshDataTool od datog mesh-a.

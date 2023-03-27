@@ -34,7 +34,7 @@ public partial class ControlRoot : Control {
 	}
 
 
-	private void OnPripremakIzabran(CsgMesh3D pripremak) {
+	private void OnPripremakIzabran(Pripremak pripremak) {
 		SteznaGlava steznaGlava = GetNode<SteznaGlava>("SubViewportContainer/SubViewport/Workspace/Masina/SteznaGlava");
 		steznaGlava.Pripremak = pripremak;
 	}

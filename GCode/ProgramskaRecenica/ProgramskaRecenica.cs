@@ -110,6 +110,6 @@ namespace GCode
 
     public struct RecenicaData {
         public ArrayMesh ResultPart { get; set; }
-        public Transform3D ResultPartGlobalTransform { get; set; }
+        public ArrayMesh ResultOtpad { get; set; }
     }
 }

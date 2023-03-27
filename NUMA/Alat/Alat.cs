@@ -28,10 +28,10 @@ public partial class Alat : Node3D {
 		base._PhysicsProcess(delta);
 
 		if (CiljnaPozicija == null) return;
-
-		if (Position == CiljnaPozicija) {
-			EmitSignal(nameof(TargetReached));
+		
+		if (Position.IsEqualApprox((Vector3)CiljnaPozicija)) {
 			CiljnaPozicija = null;
+			EmitSignal(nameof(TargetReached));
 			return;
 		}
 
